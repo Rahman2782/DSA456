@@ -1,31 +1,27 @@
 
 # rock paper scissors function
-def wins_rock_scissors_paper(s1, s2):
+def wins_rock_scissors_paper(s1, s2): 
     p1 = s1.upper()
     p2 = s2.upper()
-    match p1:
-        case 'ROCK':
-            if p2 == 'SCISSORS':
-                return 1 
-            elif p2 == 'PAPER':
-                return 0
-            elif p2 == 'ROCK':
-                return 0
-        case 'PAPER':
-            if p2 == 'SCISSORS':
-                return 0 
-            elif p2 == 'PAPER':
-                return 0
-            elif p2 == 'ROCK':
-                return 1
-        case 'SCISSORS':
-            if p2 == 'SCISSORS':
-                return 0 
-            elif p2 == 'PAPER':
-                return 1
-            elif p2 == 'ROCK':
-                return 0
+    winning_hand = {
+        'ROCK': 'SCISSORS',
+        'PAPER': 'ROCK',
+        'SCISSORS': 'PAPER'
+    }
+    if p1 == p2: 
+        return False
+    elif p1 in winning_hand and winning_hand[p1] == p2:
+        return True
+    else:
+        return False
 
+# making the string arguments uppercase to avoid casing issues, 
+#then using a dictionary, store the winning hands. If p1 is any
+#playable hand, check p2 in the same line to see if its win (return True)
+
+
+
+# factorial function
 def factorial(i):
     result = 1
     if i == 0:
