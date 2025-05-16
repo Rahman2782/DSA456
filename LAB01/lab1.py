@@ -1,5 +1,5 @@
 
-# rock paper scissors function
+# --- 1 - rock paper scissors function --- #
 def wins_rock_scissors_paper(s1, s2): 
     p1 = s1.upper()
     p2 = s2.upper()
@@ -21,7 +21,7 @@ def wins_rock_scissors_paper(s1, s2):
 
 
 
-# factorial function
+# --- 2 - factorial function --- #
 def factorial(i):
     result = 1
     if i == 0:
@@ -33,3 +33,6 @@ def factorial(i):
 
 # range() creates a sequence of numbers, the brackets hold (start, stop)
 #where the numbers begin at 'start' and up to (but excluding) 'stop'
+
+
+
