@@ -6,7 +6,7 @@
 
 import unittest
 # from lab1 import wins_rock_scissors_paper, factorial, fibonacci, sum_to_goal,UpCounter,DownCounter
-from lab1 import wins_rock_scissors_paper, factorial #, fibonacci, sum_to_goal,UpCounter,DownCounter
+from lab1 import wins_rock_scissors_paper, factorial , fibonacci#, sum_to_goal,UpCounter,DownCounter
 
 class Lab1TestCase(unittest.TestCase):
     """These are the test cases for functions and classes of lab1"""
@@ -30,12 +30,12 @@ class Lab1TestCase(unittest.TestCase):
         self.assertEqual(factorial(8),40320)
 
 
-#     def test_fibonacci(self):
-#         self.assertEqual(fibonacci(0),0)
-#         self.assertEqual(fibonacci(1),1)
-#         self.assertEqual(fibonacci(2),1)
-#         self.assertEqual(fibonacci(3),2)
-#         self.assertEqual(fibonacci(35),9227465)
+    def test_fibonacci(self):
+        self.assertEqual(fibonacci(0),0)
+        self.assertEqual(fibonacci(1),1)
+        self.assertEqual(fibonacci(2),1)
+        self.assertEqual(fibonacci(3),2)
+        self.assertEqual(fibonacci(35),9227465)
 
 
 #     def test_sum_to_goal(self):

@@ -37,8 +37,20 @@ def factorial(n):
 
 
 # --- 3 - Fibonacci --- #
-def fiboncacci(n):
-    return True
+def fibonacci(n):
+    a = 0
+    b = 1
+    if n == 0:
+        return 0
+    elif  n == 1:
+        return 1
+    else:
+        for x in range(2, n+1):
+            next = a + b
+            a = b
+            b = next
+        return b    
+
 
 
 
