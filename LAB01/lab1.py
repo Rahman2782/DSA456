@@ -53,7 +53,37 @@ def fibonacci(n):
 
 
 
+# --- 4 - sum_to_goal --- #
+def sum_to_goal(list, goal):
+    for x in list:
+        a = x
+        y = x+1
+        for y in list:
+            b = y
+            sum = a + b
+            if(sum == goal):
+                return a*b
+    return 0
 
+
+
+# --- 5 - UpCounter --- #
+class UpCounter:
+
+    def __init__(self, stepSize=1, counter=0):
+        self.stepSize = stepSize
+        self.counter = counter
+
+
+    def count(self):
+        return self.counter
+    
+    def update(self):
+        self.counter += self.stepSize
+
+class DownCounter(UpCounter):
+    def update(self):
+        self.counter -= self.stepSize
 
 
 
