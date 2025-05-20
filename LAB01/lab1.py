@@ -84,22 +84,3 @@ class UpCounter:
 class DownCounter(UpCounter):
     def update(self):
         self.counter -= self.stepSize
-
-
-
-
-
-
-
-# --- --- REFLECTION --- ---
-#While python functions in a similar way to C++, it is a higher level language and
-#as a result makes the code much more readable and smaller in comparison to C++. For
-#example, declaring variables in C++ requires you to specify the type of the variable. In
-#python I dont have to do that. The for loop is another example of a tool that is much more
-#simple in python in comparison to C++. 
-
-#The entire structure and flow of python behaves differently from what I expected, for example 
-#there are no semi-colons at all which was very off putting at first, each line is its own 
-#statement automatically. Furthermore not having brackets when declaring an if-statement or 
-#for-loop was very strange at first. These read more like a sentence then code now, if that
-#makes sense.
