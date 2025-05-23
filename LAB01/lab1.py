@@ -1,4 +1,3 @@
-
 # --- 1 - rock paper scissors function --- #
 def wins_rock_scissors_paper(s1, s2): 
     p1 = s1.upper()
@@ -20,7 +19,6 @@ def wins_rock_scissors_paper(s1, s2):
 #playable hand, check p2 in the same line to see if its win (return True)
 
 
-
 # --- 2 - factorial function --- #
 def factorial(n):
     result = 1
@@ -33,7 +31,6 @@ def factorial(n):
 
 # range() creates a sequence of numbers, the brackets hold (start, stop)
 #where the numbers begin at 'start' and up to (but excluding) 'stop'
-
 
 
 # --- 3 - Fibonacci --- #
@@ -51,6 +48,9 @@ def fibonacci(n):
             b = next
         return b    
 
+# loop begins at 2 because 0 and 1 are ruled out already, 'next' is the sum
+# of the 2 most recent numbers in the sequence. b is then set to the next value
+# in the sequence, and a is set to b's previous value.
 
 
 # --- 4 - sum_to_goal --- #
@@ -65,16 +65,16 @@ def sum_to_goal(list, goal):
                 return a*b
     return 0
 
+# lists are essentially simplified arrays
 
 
 # --- 5 - UpCounter --- #
 class UpCounter:
-
+    #attributes
     def __init__(self, stepSize=1, counter=0):
         self.stepSize = stepSize
         self.counter = counter
-
-
+    #functions
     def count(self):
         return self.counter
     
@@ -84,3 +84,7 @@ class UpCounter:
 class DownCounter(UpCounter):
     def update(self):
         self.counter -= self.stepSize
+
+# def __init__ is used to decalre and define the member attributes
+# of python classes, the keyword 'self' can be changed and member
+# attributes are called within the class using this keyword 
