@@ -11,6 +11,9 @@ def function1(number):
 # Time Complexity = O(n) - linear growth
 # Space Complexity = O(1) - constant 
 
+# The loop runs 'number' amount of times and the operations within the loop are constant,
+# the variables declared in the function are also constant.
+
 
 #Function 2
 #-----------------------
@@ -18,6 +21,9 @@ def function2(number):
 	return (number * (number + 1) * (2 * number + 1)) // 6
 # Time Complexity = O(1) - constant growth
 # Space Complexity = O(1) - constant 
+
+# There is a fixed number of operations to be performed in the function and the input
+# (number) will not affect the time and space complexity as a result.
 
 
 #Function 3
@@ -33,6 +39,9 @@ def function3(list):
 # Time Complexity = O(n^2) - quadratic growth
 # Space Complexity = O(1) - constant
 
+# This function is a bubble sort, when there is a for loop nested in another for loop it 
+# creates a grid of 'n'(length of 'list'), this results in quadratic growth or O(n^2) growth.
+# 'n' is affected by 'list' while tmp is constant  in this function.
 
 #Function 4
 #-----------------------
@@ -43,3 +52,6 @@ def function4(number):
 	return total
 # Time Complexity = O(n) - liner growth
 # Space Complexity = O(1) - constant
+
+# The loop will iterate 'number' times and each iteration performs constant operations with the
+# variables in the function all using a constant amount of space.
