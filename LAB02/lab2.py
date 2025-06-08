@@ -1,4 +1,4 @@
-#Function 1
+# Function 1
 #-----------------------
 def function1(number):
 	total = 0
@@ -12,7 +12,7 @@ def function1(number):
 # Space Complexity = O(1) - constant 
 
 
-#Function 2
+# Function 2
 #-----------------------
 def function2(number):
 	return (number * (number + 1) * (2 * number + 1)) // 6
@@ -20,7 +20,7 @@ def function2(number):
 # Space Complexity = O(1) - constant 
 
 
-#Function 3
+# Function 3
 #-----------------------
 def function3(list):
 	n = len(list)
@@ -34,7 +34,7 @@ def function3(list):
 # Space Complexity = O(1) - constant
 
 
-#Function 4
+# Function 4
 #-----------------------
 def function4(number):
 	total = 1
