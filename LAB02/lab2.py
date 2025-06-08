@@ -1,5 +1,5 @@
 # Function 1
-#-----------------------
+#--------------------------------------------------------------------
 def function1(number):
 	total = 0
  
@@ -16,7 +16,7 @@ def function1(number):
 
 
 # Function 2
-#-----------------------
+#--------------------------------------------------------------------
 def function2(number):
 	return (number * (number + 1) * (2 * number + 1)) // 6
 # Time Complexity = O(1) - constant growth
@@ -27,7 +27,7 @@ def function2(number):
 
 
 # Function 3
-#-----------------------
+#--------------------------------------------------------------------
 def function3(list):
 	n = len(list)
 	for i in range(n - 1):
@@ -43,8 +43,9 @@ def function3(list):
 # creates a grid of 'n'(length of 'list'), this results in quadratic growth or O(n^2) growth.
 # 'n' is affected by 'list' while tmp is constant  in this function.
 
+
 # Function 4
-#-----------------------
+#--------------------------------------------------------------------
 def function4(number):
 	total = 1
 	for i in range(1, number):
@@ -52,9 +53,7 @@ def function4(number):
 	return total
 # Time Complexity = O(n) - liner growth
 # Space Complexity = O(1) - constant
-<<<<<<< HEAD
 
 # The loop will iterate 'number' times and each iteration performs constant operations with the
 # variables in the function all using a constant amount of space.
-=======
->>>>>>> a0db49d3723c200b7d516f52a6067ca34efe1e8a
+
