@@ -32,3 +32,7 @@ def binary_search_2(list, l, r, key):
         return binary_search_2(list, l, m-1, key)
     elif list[m] < key:
         return binary_search_2(list, m+1, r, key)
+
+
+
+#Part B to be done in .md file
