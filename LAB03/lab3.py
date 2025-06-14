@@ -1,3 +1,5 @@
+# PART A: RECURSIVE FUNCTIONS
+#=========================================================
 # FUNCTION 1
 def factorial(x):
     if x == 1 or x == 0:
