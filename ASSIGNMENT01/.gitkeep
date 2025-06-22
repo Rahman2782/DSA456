@@ -1,0 +1,347 @@
+import random
+import time
+import sys
+import matplotlib.pyplot as plt
+
+sys.setrecursionlimit(2 * 10**5 + 1000) 
+
+def create_list(size, scenario="random"):
+    """
+    Creates a list of a given size based on the specified scenario.
+    - "random": A list of random integers.
+    - "best": A sorted list (best case for many sorts).
+    - "worst": A reverse-sorted list (worst case for bubble, selection, insertion, and quicksort with last element pivot).
+    """
+    if scenario == "random":
+        return [random.randint(0, size * 5) for _ in range(size)]
+    elif scenario == "best":
+        return list(range(size))
+    elif scenario == "worst":
+        return list(range(size - 1, -1, -1)) 
+    else:
+        raise ValueError("Invalid scenario. Use 'random', 'best', or 'worst'.")
+
+def is_sorted(my_list):
+    """
+    Checks if a list is sorted in non-decreasing order.
+    Returns True if sorted, False otherwise.
+    """
+    return all(my_list[i] <= my_list[i+1] for i in range(len(my_list) - 1))
+
+# Step 1 + 2
+def bubble_sort(my_list):
+    """
+    Sorts a list using the Bubble Sort algorithm.
+    Calculates and returns T(n), the total number of elementary operations.
+    """
+    n = len(my_list)
+    steps = 0
+    for i in range(n - 1):
+        for j in range(n - 1 - i):
+            steps += 1 
+            if my_list[j] > my_list[j + 1]:
+                steps += 3
+                my_list[j], my_list[j + 1] = my_list[j + 1], my_list[j]
+    return steps
+
+def selection_sort(my_list):
+    """
+    Sorts a list using the Selection Sort algorithm.
+    Calculates and returns T(n), the total number of elementary operations.
+    """
+    n = len(my_list)
+    steps = 0
+    for i in range(n - 1):
+        min_idx = i
+        steps += 1 
+        for j in range(i + 1, n):
+            steps += 1 
+            if my_list[j] < my_list[min_idx]:
+                min_idx = j
+                steps += 1 
+        if min_idx != i: 
+            steps += 3 
+            my_list[i], my_list[min_idx] = my_list[min_idx], my_list[i]
+    return steps
+
+def insertion_sort(my_list):
+    """
+    Sorts a list using the Insertion Sort algorithm.
+    Calculates and returns T(n), the total number of elementary operations.
+    """
+    n = len(my_list)
+    steps = 0
+    for i in range(1, n):
+        key = my_list[i]
+        steps += 1 
+        j = i - 1
+        steps += 1 
+        while j >= 0 and key < my_list[j]:
+            steps += 2 
+            my_list[j + 1] = my_list[j]
+            steps += 1 
+            j -= 1
+            steps += 1 
+
+        if j + 1 != i: 
+            steps += 2 
+        else: 
+             steps += 2 
+        my_list[j + 1] = key
+        steps += 1 
+    return steps
+
+
+def quick_sort(my_list):
+    """
+    Sorts a list using the Quick Sort algorithm.
+    This is a wrapper function to handle the recursive nature and T(n) accumulation.
+    Calculates and returns T(n), the total number of elementary operations.
+    """
+    total_steps = [0]
+    _quick_sort_recursive(my_list, 0, len(my_list) - 1, total_steps)
+    return total_steps[0]
+
+def _quick_sort_recursive(my_list, low, high, total_steps):
+    """
+    Recursive helper function for Quick Sort.
+    Performs the sorting and accumulates operations in total_steps.
+    """
+    if low < high:
+        pi, steps_partition = _partition(my_list, low, high)
+        total_steps[0] += steps_partition
+
+        _quick_sort_recursive(my_list, low, pi - 1, total_steps)
+        _quick_sort_recursive(my_list, pi + 1, high, total_steps)
+    return 0
+
+def _partition(my_list, low, high):
+    """
+    This function takes the last element as pivot, places the pivot element at
+    its correct position in the sorted array, and places all smaller elements
+    to the left of the pivot and all greater elements to the right.
+    Returns the partitioning index and the number of operations for this partition.
+    """
+    pivot = my_list[high]
+    steps = 1 
+    i = low - 1
+    steps += 1 
+
+    for j in range(low, high):
+        steps += 1 
+        if my_list[j] <= pivot:
+            i += 1
+            steps += 1 
+            my_list[i], my_list[j] = my_list[j], my_list[i]
+            steps += 3 
+    my_list[i + 1], my_list[high] = my_list[high], my_list[i + 1]
+    steps += 3 
+    return i + 1, steps
+
+def insertion_sort_subarray(my_list, left, right):
+    """
+    Sorts a sub-array of a list (from index 'left' to 'right' inclusive)
+    using the Insertion Sort algorithm.
+    Calculates and returns T(n) for this sub-array operations.
+    This function is often used as a helper in hybrid sorting algorithms.
+    """
+    steps = 0
+    for i in range(left + 1, right + 1):
+        key = my_list[i]
+        steps += 1 
+        j = i - 1
+        steps += 1 
+        while j >= left and key < my_list[j]:
+            steps += 2 
+            my_list[j + 1] = my_list[j]
+            steps += 1 
+            j -= 1
+            steps += 1 
+        if j + 1 != i:
+            steps += 2
+        else:
+            steps += 2
+        my_list[j + 1] = key
+        steps += 1 
+    return steps
+
+
+def main_step_1():
+    """
+    Demonstrates the functionality of each sorting algorithm
+    with a randomly generated list of length 100.
+    """
+    print("--- Step 1: Testing Sorting Functions ---")
+    list_size = 100
+    original_list = create_list(list_size, "random")
+
+    sort_functions = {
+        "Bubble Sort": bubble_sort,
+        "Selection Sort": selection_sort,
+        "Insertion Sort": insertion_sort,
+        "Quick Sort": quick_sort,
+        "Insertion Sort (Subarray)": lambda lst: insertion_sort_subarray(lst, 0, len(lst) - 1)
+    }
+
+    for name, func in sort_functions.items():
+        my_list = list(original_list)
+        print(f"\nSorting with {name} (List Size: {list_size})...")
+        print(f"  Original list head: {my_list[:10]}...") 
+        
+        func(my_list) 
+
+        print(f"  Sorted list head: {my_list[:10]}...") 
+        print(f"  List sorted correctly: {is_sorted(my_list)}")
+        print("-" * 40) 
+
+def main_step_2():
+    """
+    Tests the T(n) calculation for each sorting algorithm
+    across best-case, worst-case, and average (random) scenarios.
+    """
+    print("\n--- Step 2: Testing T(n) Calculation and Scenario Explanation ---")
+    list_size = 100 
+    sort_algorithms = {
+        "Bubble Sort": bubble_sort,
+        "Selection Sort": selection_sort,
+        "Insertion Sort": insertion_sort,
+        "Quick Sort": quick_sort,
+        "Insertion Sort (Subarray)": lambda lst: insertion_sort_subarray(lst, 0, len(lst) - 1)
+    }
+
+    scenarios = ["best", "random", "worst"]
+
+    for name, func in sort_algorithms.items():
+        print(f"\n--- Analyzing {name} (N={list_size}) ---")
+        for scenario in scenarios:
+            original_list = create_list(list_size, scenario)
+            my_list = list(original_list) 
+
+            steps = func(my_list) 
+            print(f"  Scenario: {scenario.capitalize()}")
+            print(f"  List sorted: {is_sorted(my_list)}")
+            print(f"  T(n) (Operations): {steps}")
+        print("-" * 40)
+
+    print("\n--- Explanation of Best, Worst, and Average Case Scenarios for Sorting Algorithms ---")
+    print("Understanding these scenarios helps in analyzing the efficiency and scalability of algorithms:")
+    print("  - **Best Case:** This occurs when the input list is already sorted or arranged in a way that minimizes the number of operations the algorithm needs to perform. It represents the most optimistic performance.")
+    print("    * **Example (Insertion Sort):** If the list is already sorted, each element only needs one comparison with its left neighbor before being placed, leading to approximately $O(N)$ operations.")
+    print("    * **Example (Quick Sort):** If the pivot selection consistently divides the array into two roughly equal halves, it results in a balanced recursion tree and $O(N \log N)$ performance.")
+    print("\n  - **Worst Case:** This is when the input list is ordered in a manner that forces the algorithm to perform the maximum possible number of operations. It represents the least efficient performance.")
+    print("    * **Example (Bubble Sort, Selection Sort, Insertion Sort):** A list sorted in reverse order is typically the worst case, requiring the maximum number of comparisons and swaps, leading to $O(N^2)$ operations.")
+    print("    * **Example (Quick Sort with specific pivot choice):** If the pivot is always chosen as the smallest or largest element (e.g., picking the last element in a reverse-sorted list), it leads to highly unbalanced partitions. This degrades Quick Sort's performance to $O(N^2)$, similar to less efficient algorithms.")
+    print("\n  - **Average Case:** This is the most common scenario, involving a randomly ordered input list. The performance usually falls between the best and worst cases. For many comparison-based algorithms, the average case is often closer to the worst case for $O(N^2)$ algorithms, and for efficient algorithms like Quick Sort, it's typically $O(N \log N)$.")
+    print("    * **Example:** A list created by `random.shuffle()` or `random.randint()` for its elements represents an average case.")
+    print("\nBy analyzing T(n) across these scenarios, we can see how the algorithm's internal mechanics react to different input structures and confirm its theoretical complexity.")
+
+def main_step_3_and_4():
+    """
+    Executes sorting algorithms on worst-case lists of varying sizes,
+    calculates T(n) and actual execution time, then plots the results.
+    """
+    print("\n--- Step 3 & 4: Plotting T(n) vs N and Time vs N (Worst Case) ---")
+
+    list_sizes_quadratic = [10, 50, 100, 500, 1000, 5000, 10000]
+    list_sizes_quicksort = list_sizes_quadratic + [20000, 50000, 100000] 
+
+    t_n_results = {
+        "Bubble Sort": [],
+        "Selection Sort": [],
+        "Insertion Sort": [],
+        "Insertion Sort (Subarray)": [],
+        "Quick Sort": []
+    }
+    time_results = {
+        "Bubble Sort": [],
+        "Selection Sort": [],
+        "Insertion Sort": [],
+        "Insertion Sort (Subarray)": [],
+        "Quick Sort": []
+    }
+
+    sort_algorithms_map = {
+        "Bubble Sort": bubble_sort,
+        "Selection Sort": selection_sort,
+        "Insertion Sort": insertion_sort,
+        "Quick Sort": quick_sort,
+        "Insertion Sort (Subarray)": lambda lst: insertion_sort_subarray(lst, 0, len(lst) - 1)
+    }
+
+    print("Starting data collection for worst-case scenarios...")
+
+    for size in list_sizes_quadratic:
+        print(f"\nProcessing N={size} for O(N^2) algorithms:")
+        for name in ["Bubble Sort", "Selection Sort", "Insertion Sort", "Insertion Sort (Subarray)"]:
+            func = sort_algorithms_map[name]
+            original_list = create_list(size, "worst") 
+            my_list = list(original_list) 
+            start_time = time.time()
+            steps = func(my_list)
+            end_time = time.time()
+
+            t_n_results[name].append(steps)
+            time_results[name].append(end_time - start_time)
+            print(f"  {name}: T(n)={steps}, Time={end_time - start_time:.6f}s")
+    
+    print("\nProcessing N for Quick Sort:")
+    for size in list_sizes_quicksort:
+        name = "Quick Sort"
+        func = sort_algorithms_map[name]
+        original_list = create_list(size, "worst") 
+        my_list = list(original_list)
+
+        start_time = time.time()
+        steps = func(my_list)
+        end_time = time.time()
+
+        t_n_results[name].append(steps)
+        time_results[name].append(end_time - start_time)
+        print(f"  {name} (N={size}): T(n)={steps}, Time={end_time - start_time:.6f}s")
+    
+    print("\nData collection complete. Generating plots...")
+
+# Step 3
+    plt.figure(figsize=(12, 7)) 
+    plt.title("Step 3: T(n) vs N (Worst Case)")
+    plt.xlabel("N (List Size)", fontsize=12)
+    plt.ylabel("T(n) (Number of Operations)", fontsize=12)
+    plt.xscale('log') 
+    plt.yscale('log') 
+
+    for name in ["Bubble Sort", "Selection Sort", "Insertion Sort", "Insertion Sort (Subarray)"]:
+        plt.plot(list_sizes_quadratic, t_n_results[name], label=name, marker='o', linestyle='-')
+
+    plt.plot(list_sizes_quicksort, t_n_results["Quick Sort"], label="Quick Sort", marker='o', linestyle='-')
+
+    plt.legend(loc='upper left', fontsize=10) 
+    plt.grid(True, which="both", ls="--", alpha=0.7) 
+    plt.tight_layout() 
+    plt.savefig("t_n_vs_n_worst_case.png", dpi=300)
+    print("\nPlot for T(n) vs N saved as t_n_vs_n_worst_case.png")
+
+    plt.figure(figsize=(12, 7)) 
+    plt.title("Step 4: Algorithm Completion Time vs N (Worst Case)")
+    plt.xlabel("N (List Size)", fontsize=12)
+    plt.ylabel("Time (seconds)", fontsize=12)
+    plt.xscale('log') 
+    plt.yscale('log') 
+
+    
+    for name in ["Bubble Sort", "Selection Sort", "Insertion Sort", "Insertion Sort (Subarray)"]:
+        plt.plot(list_sizes_quadratic, time_results[name], label=name, marker='o', linestyle='-')
+
+    
+    plt.plot(list_sizes_quicksort, time_results["Quick Sort"], label="Quick Sort", marker='o', linestyle='-')
+
+    plt.legend(loc='upper left', fontsize=10) 
+    plt.grid(True, which="both", ls="--", alpha=0.7) 
+    plt.tight_layout()
+    plt.savefig("time_vs_n_worst_case.png", dpi=300) 
+    print("Plot for Time vs N saved as time_vs_n_worst_case.png")
+    
+
+if __name__ == "__main__":
+    main_step_1()
+    main_step_2()
+    main_step_3_and_4() 
