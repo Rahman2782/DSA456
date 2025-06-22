@@ -176,7 +176,3 @@ if __name__ == "__main__":
     main_step_1()
     main_step_2()
     main_step_3_and_4()
-
-
-
-# Do you see your curves aligned with what we learnt about the performance of the sort algorithms?
